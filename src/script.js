@@ -19,7 +19,7 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-const particleTexture = textureLoader.load('/textures/particles/2.png')
+const particleTexture = textureLoader.load('/textures/particles/4.png')
 
 
 
@@ -28,13 +28,13 @@ const particleTexture = textureLoader.load('/textures/particles/2.png')
  */
 // Geometry
 const particlesGeometry = new THREE.BufferGeometry()
-const count = 20000
+const count = 10000
 
 const positions = new Float32Array(count * 3) // xyz/xyz/ ....
 const colors = new Float32Array(count * 3)
 
 for(let i = 0; i < count * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 10
+    positions[i] = (Math.random() - 0.5) * 20
     colors[i] = Math.random()
 }
 
@@ -51,7 +51,7 @@ particlesGeometry.setAttribute(
 
 // Material
 const particlesMaterial = new THREE.PointsMaterial()
-particlesMaterial.size = 0.1
+particlesMaterial.size = 0.4
 particlesMaterial.sizeAttenuation = true
 particlesMaterial.color = new THREE.Color('#ff88cc')
 particlesMaterial.transparent = true
@@ -119,6 +119,22 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    // Update particles
+    //particles.position.y =  - elapsedTime * 0.02  this will falling down
+    particles.rotation.y =  - elapsedTime * 0.02
+
+
+    // Sin Wave but not recommend
+    // for(let i = 0; i < count; i++)
+    // {
+    //     let i3 = i * 3
+
+    //     const x = particlesGeometry.attributes.position.array[i3]
+    //     particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x)
+    // }
+    // particlesGeometry.attributes.position.needsUpdate = true
+
 
     // Update controls
     controls.update()
